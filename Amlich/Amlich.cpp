@@ -29,7 +29,7 @@
 */
 
 #include "Amlich.h" 
-const uint8_t LUT2K10[] = { 68, 11, 165, 226, 110, 138, 132, 14, 74, 44, 12, 150, 200, 0, 0  };
+const uint8_t LUT2K10[] =  { 68, 13, 165, 226, 110, 138, 132, 14, 74, 44, 12, 150, 200, 12, 150, 100, 5, 86, 12,10,181,176,42,218,84,6,210,232,103,101,140,7,37,52,6,75,208,86,87,104,0,0 };
 const uint8_t roottime = 16;
 NgayThangNam::NgayThangNam(){
 	this->ngay = 1;
@@ -95,7 +95,7 @@ uint8_t LUT::LeapMonth(){
 }
 
 NgayThangNam NgayThangNam::ConvertDay(){
-	uint8_t sD, sM, lD, lM, lY, D, M, Y, cD, cM, aM;
+	uint8_t sD, sM, lD, lM, lY, D, M, Y, aM;
 	NgayThangNam current;
 	current.ngay = this->ngay;
 	current.thang = this->thang;
@@ -130,10 +130,11 @@ NgayThangNam NgayThangNam::ConvertDay(){
 	NgayThangNam CountDay = NgayThangNam(sD, sM, lY);
 	lM = 1;
 	if (lut.LeapMonth() == 0, cNN = false);
+	else cNN = true;
 	for (int i = 1; i < 13; i++){
 		aM = lut.GetMaxDay(lM);
 		NgayThangNam Nextday = CountDay + aM;
-		if ( Nextday.Compare2Day(current) > 0){
+		if (Nextday.Compare2Day(current) > 1){
 			int j = CountDay + aM - current;
 			int k = aM - j;
 			CountDay = CountDay + k;
@@ -147,10 +148,10 @@ NgayThangNam NgayThangNam::ConvertDay(){
 		}
 		else{
 			CountDay = CountDay + aM;
-			if ((lM == lut.LeapMonth())& cNN){
+			if ((lM == lut.LeapMonth()) && cNN){
 				cNN = false;
 				NgayThangNam Nextday = CountDay + lut.GetMaxDay(13);
-				if (Nextday.Compare2Day(current) > 0){
+				if (Nextday.Compare2Day(current) > 1){
 					int j = CountDay + aM - current;
 					int k = aM - j;
 					CountDay = CountDay + k;
