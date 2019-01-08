@@ -21,17 +21,29 @@ So ngay trong thang  :  0             29 ngay
 #if defined(ARDUINO) && ARDUINO >= 100
 #include "Arduino.h"
 #endif
-#include <DS1307.h>
 
-const unsigned char LUT2K16[] = { 68, 13, 165, 226, 110, 138, 132, 14, 74, 44, 12, 150, 200, 12, 150, 100, 5, 86, 12, 10, 181, 176, 42, 218, 84, 6, 210, 232, 103, 101, 140, 7, 37, 52, 6, 75, 208, 86, 87, 104, 0, 0 };
+const unsigned char LUT2K16[] = { 68, 13, 165, // 2k16
+            226, 110, 138,    // 2k17
+			132, 14, 74,      // 2k18
+			44, 12, 150,      // 2k19
+			200, 12, 150,     // 2k20
+			100, 5, 86,       // 2k21
+			12, 10, 181,      // 2k22
+			176, 42, 218,     // 2k23
+			84, 6, 210,       // 2k24
+			232, 103, 101,    // 2k25
+			140, 7, 37,       // 2k26
+			52, 6, 75,        // 2k27
+			208, 86, 87,      // 2k28
+			104, 0, 0 };      // 2k29
 const unsigned char LEDCode[] = { 192,249,164,176,153,146,130,248,128,144 };
 //0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90 
-class TimeSpand {
+class TimeSpan {
 public:
 	unsigned char hour;
 	unsigned char minute;
 	unsigned char second;
-	TimeSpand();
+	TimeSpan();
 };
 
 class Date {
@@ -45,20 +57,18 @@ public:
 	Date();
 	Date(unsigned char _date, unsigned char _month, unsigned char _year);
 	unsigned char getMaxDate();
-	bool operator>(const Date& d2);
-	bool operator<(const Date& d2);
-	bool operator=(const Date& d2);
-	Date operator+(const unsigned char& b);
+	bool operator>(const Date d2);
+	bool operator<(const Date d2);
+	bool operator=(const Date d2);
+	Date operator+(const unsigned char b);
 	Date getLunarDateMonth();
 };
 
 class DateTime {
 public:
-	TimeSpand time;
+	TimeSpan time;
 	Date date;
 	Date lunarDate;
-	//DS1307 realTime;
-	//public:
 	unsigned char getHour();
 	unsigned char getMinute();
 	unsigned char getSecond();
@@ -75,8 +85,6 @@ public:
 	void setDate(unsigned char d, unsigned char dd, unsigned char MM, unsigned char yy);
 	void setLunarDate();
 	void shiftData(int dataPin, int clockPin, int slatchPin);
-
 };
 
 #endif 
-

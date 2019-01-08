@@ -54,7 +54,6 @@ unsigned char DateTime::getLunarMonth() {
 	return lunarDate.month;
 }
 
-
 void DateTime::setLunarDate() {
 	Date tempDt = date.getLunarDateMonth();
 	lunarDate.date = tempDt.date;
@@ -76,16 +75,8 @@ void DateTime::setDate(unsigned char d, unsigned char dd, unsigned char MM, unsi
 	date.year = yy;
 	setLunarDate();
 }
-// DateTime* DateTime::fromDS1307() {
 
-// 	DateTime* Dt = new DateTime();
-// 	Dt->time = Time();
-// 	Dt->date = Date();
-// 	Dt->setLunarDate();
-// 	return Dt;
-// }
-
-TimeSpand::TimeSpand() {
+TimeSpan::TimeSpan() {
 	hour = 16;
 	minute = 23;
 	second = 0;
@@ -143,29 +134,29 @@ unsigned char Date::getMaxDate() {
 	return number;
 }
 
-bool Date::operator>(const Date& d2) {
+bool Date::operator>(const Date d2) {
 	return (year > d2.year) || (year == d2.year && month > d2.month) || (year == d2.year && month == d2.month && date > d2.date);
 }
 
-bool Date::operator<(const Date& d2) {
+bool Date::operator<(const Date d2) {
 	return (year < d2.year) || (year == d2.year && month < d2.month) || (year == d2.year && month == d2.month && date < d2.date);
 }
 
-bool Date::operator=(const Date& d2) {
+bool Date::operator=(const Date d2) {
 	return (year == d2.year && month == d2.month && date == d2.date);
 }
 
-Date Date::operator+(const unsigned char& b) {
-	Date *addedDate = new Date(date + b, month, year);
-	while (addedDate->date > addedDate->getMaxDate()) {
-		addedDate->date = addedDate->date - addedDate->getMaxDate();
-		addedDate->month++;
-		if (addedDate->month == 13) {
-			addedDate->year++;
-			addedDate->month = 1;
+Date Date::operator+(const unsigned char b) {
+	Date addedDate(date + b, month, year);
+	while (addedDate.date > addedDate.getMaxDate()) {
+		addedDate.date = addedDate.date - addedDate.getMaxDate();
+		addedDate.month++;
+		if (addedDate.month == 13) {
+			addedDate.year++;
+			addedDate.month = 1;
 		}
 	}
-	return *addedDate;
+	return addedDate;
 }
 
 unsigned char GetMaxDay(unsigned char lunarMonth, unsigned char byte1, unsigned char byte2, unsigned char byte3) {
@@ -202,7 +193,7 @@ Date Date::getLunarDateMonth() {
 	bool CNN = true;
 	//Date Start;
 	unsigned char byte1, byte2, byte3;
-	if (year < roottime) return  *(new Date(date, month, year));
+	if (year < roottime) return Date(date, month, year);
 	// Get Lut 3 bytes
 	byte1 = LUT2K16[(year - roottime) * 3];
 	byte2 = LUT2K16[(year - roottime) * 3 + 1];
@@ -212,10 +203,11 @@ Date Date::getLunarDateMonth() {
 	sD = byte1 >> 3;
 	if ((byte1 & 0x04) == 0) sM = 1;
 	else sM = 2;
-	Date cmpDate = *(new Date(sD, sM, year));
+	Date cmpDate(sD, sM, year);
+	Date currentDate(date, month, year);
 	//Get LUT for previous year if this Start Day < Current Day
-	if (*this < cmpDate) {
-		if (year < 17) return  *(new Date(date, month, year));
+	if (currentDate < cmpDate) {
+		if (year < 17) return Date(date, month, year);
 		byte1 = LUT2K16[(year - roottime) * 3 - 3];
 		byte2 = LUT2K16[(year - roottime) * 3 - 2];
 		byte3 = LUT2K16[(year - roottime) * 3 - 1];
@@ -236,7 +228,7 @@ Date Date::getLunarDateMonth() {
 		// get max day of lunar month
 		//aM = GetMaxDay(lM, byte1, byte2, byte3);
 		Date TempDate = cmpDate + aM;
-		if (TempDate > *this) {
+		if (TempDate > currentDate) {
 			break;
 		}
 		else {
@@ -267,5 +259,5 @@ Date Date::getLunarDateMonth() {
 	else {
 		lD = date + cmpDate.getMaxDate() - cmpDate.date + 1;
 	}
-	return *(new Date(lD, lM, year));
+	return Date(lD, lM, year);
 }
