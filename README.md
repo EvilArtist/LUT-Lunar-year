@@ -35,6 +35,7 @@ Mốc là năm 2016:
 1. Kiểm tra, nếu tháng của compareDay = tháng hiện tại nghĩa là ngày dương lịch tướng ứng với ngày âm lịch cùng tháng với tháng hiện tại
 
 ngày D tháng M tương ứng 1/m âm
+
  Mon | Tue | Wed | Thu | Fri | Sat | Sun
  --- | --- | --- | --- | --- | --- | --- |
 D (_1/m_) | ~ | ~ | ~ | ~ | ~ | ~ 
