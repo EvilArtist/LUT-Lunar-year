@@ -22,32 +22,34 @@ So ngay trong thang  :  0             29 ngay
 #include "Arduino.h"
 #endif
 
-const unsigned char LUT2K16[] = { 68, 13, 165, // 2k16
-            226, 110, 138,    // 2k17
-			132, 14, 74,      // 2k18
-			44, 12, 150,      // 2k19
-			200, 12, 150,     // 2k20
-			100, 5, 86,       // 2k21
-			12, 10, 181,      // 2k22
-			176, 42, 218,     // 2k23
-			84, 6, 210,       // 2k24
-			232, 103, 101,    // 2k25
-			140, 7, 37,       // 2k26
-			52, 6, 75,        // 2k27
-			208, 86, 87,      // 2k28
-			104, 0, 0 };      // 2k29
-const unsigned char LEDCode[] = { 192,249,164,176,153,146,130,248,128,144 };
-//0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90 
-class TimeSpan {
-public:
+const unsigned char LUT2K16[] = {68, 13, 165,   // 2k16
+								 226, 110, 138, // 2k17
+								 132, 14, 74,   // 2k18
+								 44, 12, 150,   // 2k19
+								 200, 12, 150,  // 2k20
+								 100, 5, 86,	// 2k21
+								 12, 10, 181,   // 2k22
+								 176, 42, 218,  // 2k23
+								 84, 6, 210,	// 2k24
+								 232, 103, 101, // 2k25
+								 140, 7, 37,	// 2k26
+								 52, 6, 75,		// 2k27
+								 208, 86, 87,   // 2k28
+								 104, 0, 0};	// 2k29
+const unsigned char LEDCode[] = {192, 249, 164, 176, 153, 146, 130, 248, 128, 144};
+//0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90
+class TimeSpan
+{
+  public:
 	unsigned char hour;
 	unsigned char minute;
 	unsigned char second;
 	TimeSpan();
 };
 
-class Date {
-public:
+class Date
+{
+  public:
 	unsigned char day;
 	unsigned char date;
 	unsigned char month;
@@ -64,8 +66,9 @@ public:
 	Date getLunarDateMonth();
 };
 
-class DateTime {
-public:
+class DateTime
+{
+  public:
 	TimeSpan time;
 	Date date;
 	Date lunarDate;
@@ -87,4 +90,4 @@ public:
 	void shiftData(int dataPin, int clockPin, int slatchPin);
 };
 
-#endif 
+#endif
