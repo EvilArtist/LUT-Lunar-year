@@ -3,7 +3,7 @@ Chuyển đổi Dương lịch sang âm lịch sử dụng look-up-table vơ�
 Sử dụng cho thư viện arduino.
 
 # Thuật toán sử dụng
-## Lưu data
+## Lưu data vào bảng tra
 ```
 byte1:    [Ngay bat dau 1/1 AL - 5 bit][thang bat dau 1/1 AL - 1 bit][So ngay thang nhuan - 1 bit]
 byte2:    [Thang nhuan - 4 bit][so ngay thang 12,11,10,9 - 4bit]
