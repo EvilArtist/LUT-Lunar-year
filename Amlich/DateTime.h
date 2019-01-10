@@ -22,7 +22,7 @@ So ngay trong thang  :  0             29 ngay
 #include "Arduino.h"
 #endif
 
-const unsigned char LUT2K16[] = {68, 13, 165,   // 2k16
+const uint8_t LUT2K16[] = {68, 13, 165,   // 2k16
 								 226, 110, 138, // 2k17
 								 132, 14, 74,   // 2k18
 								 44, 12, 150,   // 2k19
@@ -36,58 +36,60 @@ const unsigned char LUT2K16[] = {68, 13, 165,   // 2k16
 								 52, 6, 75,		// 2k27
 								 208, 86, 87,   // 2k28
 								 104, 0, 0};	// 2k29
-const unsigned char LEDCode[] = {192, 249, 164, 176, 153, 146, 130, 248, 128, 144};
+const uint8_t LEDCode[] = {192, 249, 164, 176, 153, 146, 130, 248, 128, 144};
 //0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90
 class TimeSpan
 {
   public:
-	unsigned char hour;
-	unsigned char minute;
-	unsigned char second;
+	uint8_t _hour;
+	uint8_t _minute;
+	uint8_t _second;
 	TimeSpan();
+	TimeSpan(uint8_t h, uint8_t m, uint8_t s);
 };
 
 class Date
 {
   public:
-	unsigned char day;
-	unsigned char date;
-	unsigned char month;
-	unsigned char year;
-	bool isLeafMonth;
-	bool isLeafYear();
+	uint8_t _day;
+	uint8_t _date;
+	uint8_t _month;
+	uint8_t _year;
+	bool _isLeafMonth;
+	bool _isLeafYear;
 	Date();
-	Date(unsigned char _date, unsigned char _month, unsigned char _year);
-	unsigned char getMaxDate();
+	Date(uint8_t date, uint8_t month, uint8_t year);
+	uint8_t getMaxDate();
 	bool operator>(const Date d2);
 	bool operator<(const Date d2);
 	bool operator=(const Date d2);
-	Date operator+(const unsigned char b);
+	Date operator+(uint8_t b);
 	Date getLunarDateMonth();
+	uint8_t getDayOfWeek();
+	bool isLeafYear();
 };
 
 class DateTime
 {
   public:
-	TimeSpan time;
-	Date date;
-	Date lunarDate;
-	unsigned char getHour();
-	unsigned char getMinute();
-	unsigned char getSecond();
-	unsigned char getDate();
-	unsigned char getDay();
-	unsigned char getMonth();
-	unsigned char getYear();
-	unsigned char getMaxDate();
+	uint8_t getHour();
+	uint8_t getMinute();
+	uint8_t getSecond();
+	uint8_t getDate();
+	uint8_t getDayOfWeek();
+	uint8_t getMonth();
+	uint8_t getYear();
+	uint8_t getMaxDate();
 	bool isLeafYear();
 	bool isLeafMonth();
-	unsigned char getLunarDate();
-	unsigned char getLunarMonth();
-	void setTime(unsigned char HH, unsigned char mm);
-	void setDate(unsigned char d, unsigned char dd, unsigned char MM, unsigned char yy);
-	void setLunarDate();
-	void shiftData(int dataPin, int clockPin, int slatchPin);
+	uint8_t getLunarDate();
+	uint8_t getLunarMonth();
+	DateTime(Date date, TimeSpan time);
+	
+private :	
+	TimeSpan _time;
+	Date _date;
+	Date _lunarDate;
 };
 
 #endif
